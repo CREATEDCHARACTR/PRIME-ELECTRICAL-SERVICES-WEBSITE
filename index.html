@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/CREATEDCHARACTR/PRIME-ELECTRICAL-SERVICES-WEBSITE/5dfdded2fbac523836ea6f493ccfafd84574fda4/6E5280CD-E25E-4340-A845-E837EB5A5BC4.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prime Electrical Services Colorado LLC</title>
+    <meta name="description" content="Need a reliable electrician in Denver, CO? Prime Electrical Services offers licensed, insured, and family-owned electrical work. From EV chargers to panel upgrades, get a free quote from our master electrician today." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'prime-gold': '#D4AF37', // A classic, rich gold
+              'prime-dark': '#121212', // A very dark gray, softer than pure black
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.4",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .page-fade-in {
+    animation: fadeIn 0.7s ease-out forwards;
+  }
+  /* Custom Leaflet Styles */
+  .leaflet-popup-content-wrapper {
+    background: #121212;
+    color: #fff;
+    border-radius: 8px;
+    border: 1px solid #D4AF37;
+  }
+  .leaflet-popup-tip {
+    background: #121212;
+  }
+  .leaflet-popup-content a {
+    color: #D4AF37;
+  }
+  .leaflet-container {
+    background: #333; /* Dark background for map tiles while loading */
+  }
+
+  /* NEW ROBUST Circuit Background */
+  #circuit-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .static-trace {
+    stroke: rgba(212, 175, 55, 0.25);
+    stroke-width: 2;
+    fill: none;
+  }
+  .pulse-trace {
+    stroke: #D4AF37;
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 150 2000;
+    filter: drop-shadow(0 0 4px #D4AF37) drop-shadow(0 0 8px #D4AF37);
+    animation: move-pulse 15s linear infinite;
+  }
+  .node {
+    fill: #D4AF37;
+    filter: drop-shadow(0 0 4px #D4AF37);
+    animation: pulse-node 4s ease-in-out infinite;
+  }
+  
+  @keyframes move-pulse {
+    from { stroke-dashoffset: 2150; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes pulse-node {
+    0%, 100% { opacity: 0.5; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* Animation Delays */
+  .pulse-trace:nth-of-type(2) { animation-delay: -3s; animation-duration: 20s; }
+  .pulse-trace:nth-of-type(3) { animation-delay: -7s; animation-direction: reverse; animation-duration: 12s; }
+  .pulse-trace:nth-of-type(4) { animation-delay: -1s; animation-duration: 18s; }
+  .pulse-trace:nth-of-type(5) { animation-delay: -5s; animation-direction: reverse; animation-duration: 22s; }
+  .node:nth-of-type(odd) { animation-delay: -1.5s; }
+
+  /* Custom Prose Styles for Blog */
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    color: #D4AF37;
+  }
+  .prose strong {
+    color: #fff;
+  }
+  .prose a {
+    color: #D4AF37;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out;
+  }
+  .prose a:hover {
+    color: #fde047; /* Lighter gold */
+  }
+  .prose blockquote {
+    border-left-color: #D4AF37;
+  }
+  .prose ul > li::marker, .prose ol > li::marker {
+    color: #D4AF37;
+  }
+
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Electrician",
+  "name": "Prime Electrical Services Colorado LLC",
+  "image": "https://raw.githubusercontent.com/CREATEDCHARACTR/PRIME-ELECTRICAL-SERVICES-WEBSITE/5dfdded2fbac523836ea6f493ccfafd84574fda4/6E5280CD-E25E-4340-A845-E837EB5A5BC4.png",
+  "url": "https://www.primeelectricalco.com",
+  "telephone": "+1-720-555-0123",
+  "description": "Master electricians providing expert residential and commercial electrical services in Denver, Boulder, and the surrounding Colorado Front Range. Licensed, insured, and family-owned.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 Main St",
+    "addressLocality": "Denver",
+    "addressRegion": "CO",
+    "postalCode": "80202",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 39.739235,
+    "longitude": -104.990250
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "08:00",
+      "closes": "17:00"
+    }
+  ],
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Denver"
+    },
+    {
+      "@type": "City",
+      "name": "Boulder"
+    },
+    {
+      "@type": "City",
+      "name": "Aurora"
+    }
+  ],
+  "sameAs": [
+    "https://www.yelp.com/biz/prime-electrical-services-colorado-denver"
+  ]
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-prime-dark text-white">
+
+<div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
